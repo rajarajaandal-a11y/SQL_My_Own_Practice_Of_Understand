@@ -1,0 +1,184 @@
+create database youtube;
+use youtube;
+
+create table youtube (roll int,name varchar(20));
+
+alter table youtube add (age int);
+alter table youtube add (phone varchar(20));
+alter table youtube 
+rename column phone to phone_no;
+alter table youtube
+drop column phone;
+alter table youtube 
+change name name varchar(25);
+alter table youtube 
+modify roll varchar(12);
+alter table youtube 
+add primary key (age);
+alter table youtube 
+add unique (roll);
+
+
+insert into youtube values (1,"roshan",14);
+insert into youtube values (2,"roni",15),(3,"roson",16);
+
+rename table youtube to you;
+drop table you; 
+truncate table you;
+
+
+select * from youtube;  
+
+
+update youtube set phone="24422322";
+update youtube set phone="8778218345" where roll=1;
+update youtube set name="nandhu" where roll=1;
+update youtube set name="maha",age=20   where roll=2;
+
+delete from youtube;
+
+
+#constraints
+
+ 
+CREATE TABLE EmployeePx
+(
+Empid INT, Name VARCHAR(50) );
+
+INSERT INTO EmployeePX(Empid, Name)
+VALUES(3 ,'Kala'),
+(2, 'Ram'),
+(1, 'Shiva'),
+(4, 'Shakthi');
+
+
+select * from employeePx;
+
+truncate table employeePx;
+
+# add primary key
+alter table employeePx
+add primary key (empid); 
+
+# unique key
+
+create table employeeunique(
+empid int primary key ,
+name varchar(50),
+email varchar(30) unique,
+contactno varchar(12));
+
+insert into employeeunique (empid,name,email,contactno)
+values (1,"kala","kala123@gmail.com","8778218345"),
+       (2,"rona","rona1232gmail.com","9025123380");
+       
+alter table employeeunique 
+add constraint unique_contact_no unique(contactno); # unique_contact_no is constraint name and is give any name   and constarint name is used drop a constraints   
+
+truncate table employeeunique;
+ 
+select * from employeeunique;
+
+# not null 
+
+create table department (
+deptid  int primary key not null,
+depname varchar(20) not null);
+
+# foreign key 
+
+create table employeefk(
+empid int primary key,
+name varchar(50),
+deptid int,
+foreign key (deptid) references department(deptid));
+
+# foriegn key 
+
+create table employee_fk_alter(
+empid int primary key,
+name varchar(30),
+deptid int);
+
+# the employee_fk_alter without using foreign key, now add foriegn 
+
+alter table employee_fk_alter
+add constraint fk_dep 
+foreign key (deptid ) references department(deptid);	
+
+# delete a foreign key in employee_fk_alter table using an constraints name
+
+alter table employee_fk_alter # is used to remove an foreign key in table
+drop constraint fk_dep ;
+
+# check 
+
+create table employeecheck(
+empid int,
+name varchar(40),
+salary decimal(10,2) check(salary>0),
+age int);
+
+insert into employeecheck(empid,name,salary,age)
+values(1,"raja",2848487,20),
+(2,"rona",100000,21);
+
+# add check constraints to age cloumn of employeecheck table
+
+alter table employeecheck
+add constraint ck_age check (age >18);
+
+# default constraints
+
+create table employeedefault(
+empid int primary key ,
+name varchar(30),
+hiredate datetime default current_timestamp( ),
+department varchar(85));
+
+insert into employeedefault (empid , name , hiredate , department)
+values (1,"roni","2026-07-04","hr");
+
+insert into employeedefault (empid , name  , department)
+values (2,"roi","sales");
+insert into employeedefault (empid , name  , department)
+values (5," " ,""),
+(6," " ,"");
+
+
+alter table employeedefault 
+add (age int, roll_status varchar(40)  default 'active');
+
+# add defalult constraint for department colummn in employeedefault table
+
+# alter table employeedefault
+# add constraint con_department 
+# default department for "developer" ;  # not work 
+
+alter table employeedefault
+modify department varchar(45) default "devops";
+
+
+select * from employeedefault;
+
+
+create table employeetest(
+empid int ,
+name varchar(80));
+
+insert into employeetest (empid , name)
+values (1,"ro"),
+(2,"shalu");
+truncate table employeetest;
+
+select * from employeetest;
+
+create table employee_identiy (
+empid int primary key auto_increment  ,name varchar(50));  
+
+insert into employee_identiy (name)
+values("nan"),
+("ran"),
+("rajnan");
+
+select * from employee_identiy;
